@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ZPEnergy",
-    version="1.0.0",
+    version="1.0.1",
     description="Device server for ZPEnergy motor at Softimax",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -17,7 +17,7 @@ setuptools.setup(
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
-    install_requires=['pytango', ],
+    install_requires=['pytango', 'socket', 'scipy'],
     entry_points={
         'console_scripts': [
             'SoftiZPEnergy = ZPEnergy.ZPEnergy:main',
