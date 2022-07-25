@@ -14,3 +14,30 @@ This device has the following properties:
 | PandaHost | PandaBox host name | "b-softimax-panda-0" | "DevString" |
 | PandaPort | PandaBox control port number | "8888" | "DevShort" |
 
+
+How to install
+--------------
+
+If you push your package on testing repo do:
+
+```
+  sudo yum makecache --enablerepo=maxiv-testing\*
+  sudo yum install tangods-softimax-zpenergy --enablerepo=maxiv-testing\*
+```
+
+If you push on master branch do:
+
+```
+  sudo yum makecache
+  sudo yum install tangods-softimax-zpenergy
+```
+
+How to run after package installation
+-------------------------------------
+
+After you install the package, on your terminal you can do:
+
+```
+  SoftiZPEnergy B318A-CTL
+```
+
