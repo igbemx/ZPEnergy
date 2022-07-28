@@ -40,4 +40,17 @@ After you install the package, on your terminal you can do:
 ```
   SoftiZPEnergy B318A-CTL
 ```
+It is important that the following attribute properties are set manually in Jive:
+Defocus/__value 
+DialPos/__value
+Energy/__value
+FocalDist/__value
+Position/__value
+UserPos/__value
+ZP_A0/__value
+ZP_A1/__value
+ZP_Diam/__value
+ZP_width/__value
+
+They have to be normally initiallized with the respective values before starting the device server for the very first time, after that they are updated via the device.
 
