@@ -464,7 +464,7 @@ class SoftiZPEnergy(Device):
 def main(args=None, **kwargs):
     """Main function of the ZPEnergy module."""
     # PROTECTED REGION ID(ZPEnergy.main) ENABLED START #
-    return run((ZPEnergy,), args=args, **kwargs)
+    return run((SoftiZPEnergy,), args=args, **kwargs)
     # PROTECTED REGION END #    //  ZPEnergy.main
 
 
