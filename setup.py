@@ -1,23 +1,20 @@
 #!/usr/bin/env python3 
-import setuptools
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+from setuptools import setup, find_packages
 
-setuptools.setup(
-    name="ZPEnergy",
-    version="1.0.0",
+setup(
+    name="tangods-softimax-zpenergy",
+    use_scm_version=True,
+    setup_requires=["setuptools_scm"],
     description="Device server for ZPEnergy motor at Softimax",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
     author="Igor Beinik",
     author_email="igor.beinik@maxiv.lu.se",
     license="GPLv3",
     url="https://gitlab.maxiv.lu.se/softimax/tangods-softimax-zpenergy",
     package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
+    packages=find_packages(where="src"),
     python_requires=">=3.6",
-    install_requires=['pytango', ],
+    install_requires=['pytango', 'scipy'],
     entry_points={
         'console_scripts': [
             'SoftiZPEnergy = ZPEnergy.ZPEnergy:main',

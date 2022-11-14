@@ -111,7 +111,7 @@ class ZPEnergy(Device):
     def calc_energy(self, focus, zp_diam, zone_width):
         try:
             energy = (Planck * (c * 1 * 10**6) * focus) / (zp_diam * zone_width) # all should be in microns, including the c
-            #print('calc_energy() call, energy:', energy)
+            # print('calc_energy() call, energy:', energy)
             return energy
         except Exception as e:
             print (e)
