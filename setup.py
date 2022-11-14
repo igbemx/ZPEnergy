@@ -11,13 +11,12 @@ setup(
     author_email="igor.beinik@maxiv.lu.se",
     license="GPLv3",
     url="https://gitlab.maxiv.lu.se/softimax/tangods-softimax-zpenergy",
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
+    packages=find_packages(exclude=["tests", "*.tests.*", "tests.*", "scripts"]),
     python_requires=">=3.6",
     install_requires=['pytango', 'scipy'],
     entry_points={
         'console_scripts': [
-            'SoftiZPEnergy = ZPEnergy.ZPEnergy:main',
+            'SoftiZPEnergy = SoftiZPEnergy.SoftiZPEnergy:main',
         ],
     },
 )
