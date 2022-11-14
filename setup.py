@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-setuptools.setup(
+setup(
     name="tangods-softimax-zpenergy",
     use_scm_version=True,
     setup_requires=["setuptools_scm"],
@@ -12,7 +12,7 @@ setuptools.setup(
     license="GPLv3",
     url="https://gitlab.maxiv.lu.se/softimax/tangods-softimax-zpenergy",
     package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
+    packages=find_packages(where="src"),
     python_requires=">=3.6",
     install_requires=['pytango', 'scipy'],
     entry_points={
