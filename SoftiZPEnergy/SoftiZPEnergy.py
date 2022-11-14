@@ -29,10 +29,10 @@ from tango import Database
 Planck = 4.136*10**(-15)
 # PROTECTED REGION END #    //  ZPEnergy.additionnal_import
 
-__all__ = ["ZPEnergy", "main"]
+__all__ = ["SoftiZPEnergy", "main"]
 
 
-class ZPEnergy(Device):
+class SoftiZPEnergy(Device):
     """
     This device implements zone plate positioning for the selected energy.
 
@@ -464,7 +464,7 @@ class ZPEnergy(Device):
 def main(args=None, **kwargs):
     """Main function of the ZPEnergy module."""
     # PROTECTED REGION ID(ZPEnergy.main) ENABLED START #
-    return run((ZPEnergy,), args=args, **kwargs)
+    return run((SoftiZPEnergy,), args=args, **kwargs)
     # PROTECTED REGION END #    //  ZPEnergy.main
 
 

@@ -1,23 +1,16 @@
-#!/usr/bin/env python3 
+#!/usr/bin/env python
 
 from setuptools import setup, find_packages
+
 
 setup(
     name="tangods-softimax-zpenergy",
     use_scm_version=True,
     setup_requires=["setuptools_scm"],
     description="Device server for ZPEnergy motor at Softimax",
-    author="Igor Beinik",
-    author_email="igor.beinik@maxiv.lu.se",
-    license="GPLv3",
     url="https://gitlab.maxiv.lu.se/softimax/tangods-softimax-zpenergy",
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
-    python_requires=">=3.6",
+    packages=find_packages(exclude=["tests", "*.tests.*", "tests.*", "scripts"]),
     install_requires=['pytango', 'scipy'],
-    entry_points={
-        'console_scripts': [
-            'SoftiZPEnergy = ZPEnergy.ZPEnergy:main',
-        ],
-    },
+    include_package_data=True,
+    entry_points={"console_scripts": ["SoftiZPEnergy = SoftiZPEnergy.SoftiZPEnergy:main", ]},
 )
