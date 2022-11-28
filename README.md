@@ -55,3 +55,8 @@ It is important that the following attribute properties are set manually in Jive
 
 They have to be normally initiallized with the respective values before starting the device server for the very first time, after that they are updated via the device.
 
+Attributes arithmetic:
+Downstream values are more positive and the upstream are more negative, respectively.
+Position = EnsambleAxis1_Position - dial_offset (device property)
+Position = FocalDist + ZP_A0
+
