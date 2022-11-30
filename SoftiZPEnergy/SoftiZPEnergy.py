@@ -354,10 +354,16 @@ class SoftiZPEnergy(Device):
     def write_Position(self, value):
         # PROTECTED REGION ID(SoftiZPEnergy.Position_write) ENABLED START #
         """Set the Position attribute."""
+        if self.__x_tilt_correct_on:
+            correction_on = True
+            self.__x_tilt_correct_on = False
         self.__position_0 = value
         self.zp_dev.Position = value / self.zp_unit_coeff + self.dial_offset
         self.__focal_dist = value - self._zp__a0 - self.__defocus
         self.db.put_device_attribute_property(self.get_name(), {'Position': {'Position': value}})
+        if correction_on:
+            self.__x_tilt_correct_on = True
+
         # PROTECTED REGION END #    //  SoftiZPEnergy.Position_write
 
     def read_Energy(self):
