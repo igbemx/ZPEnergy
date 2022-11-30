@@ -328,7 +328,8 @@ class SoftiZPEnergy(Device):
         self.__sample_dx = self.__sample_x - self.__sample_x_0
         self.__x_tilt_correct_val = self.__sample_dx * math.tan(math.radians(self.__x_tilt))
         if self.__x_tilt_correct_on:
-            self.write_Position(self.__position_0 + self.__x_tilt_correct_sign*self.__x_tilt_correct_val)
+            new_position = self.__position_0 + self.__x_tilt_correct_sign*self.__x_tilt_correct_val
+            self.zp_dev.Position = new_position / self.zp_unit_coeff + self.dial_offset
         # PROTECTED REGION END #    //  SoftiZPEnergy.always_executed_hook
 
     def delete_device(self):
@@ -353,6 +354,7 @@ class SoftiZPEnergy(Device):
     def write_Position(self, value):
         # PROTECTED REGION ID(SoftiZPEnergy.Position_write) ENABLED START #
         """Set the Position attribute."""
+        self.__position_0 = value
         self.zp_dev.Position = value / self.zp_unit_coeff + self.dial_offset
         self.__focal_dist = value - self._zp__a0 - self.__defocus
         self.db.put_device_attribute_property(self.get_name(), {'Position': {'Position': value}})
