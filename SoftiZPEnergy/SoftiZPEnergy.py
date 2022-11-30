@@ -302,7 +302,6 @@ class SoftiZPEnergy(Device):
         self.__x_tilt_correct_on = False
         self.__sample_x_0 = 0
         self.__sample_dx = 0
-        self.correction_on = False
         self.__x_tilt_correct_on = False
 
         try:
@@ -357,13 +356,15 @@ class SoftiZPEnergy(Device):
         # PROTECTED REGION ID(SoftiZPEnergy.Position_write) ENABLED START #
         """Set the Position attribute."""
         if self.__x_tilt_correct_on:
-            self.correction_on = True
+            correction_on = True
             self.__x_tilt_correct_on = False
+        else:
+            correction_on = False
         self.__position_0 = value
         self.zp_dev.Position = value / self.zp_unit_coeff + self.dial_offset
         self.__focal_dist = value - self._zp__a0 - self.__defocus
         self.db.put_device_attribute_property(self.get_name(), {'Position': {'Position': value}})
-        if self.correction_on:
+        if correction_on:
             self.__x_tilt_correct_on = True
 
         # PROTECTED REGION END #    //  SoftiZPEnergy.Position_write
