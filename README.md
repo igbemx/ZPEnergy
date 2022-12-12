@@ -60,3 +60,14 @@ Downstream values are more positive and the upstream are more negative, respecti
 Position = EnsambleAxis1_Position - dial_offset (device property)
 Position = FocalDist + ZP_A0
 
+Manual syncronization of the Tolek's STXM control and SoftiZPEnergy device numbers 
+----------------------------------------------------------------------------------
+
+- Tolek's STXM program changes only the 'Position' attribute of the SoftiZPEnergy tango device
+- The A0 values doesn't have to be the same in both programs
+- The easiest way to syncronize the programs is to:
+  1) Select a certain energy, e.g. 700 eV in Tolek's program, so that the ZP move to the corresponding position.
+  2) The 'Energy' value in SoftiZPEnergy device may deviate now from the value selected in Tolek's program.
+  3) Adjust the A0, so that the currently displayed in the device energy would coincide with the actual energy selected at the beginning.
+  4) That is it, the devices should be in sync now.
+
