@@ -259,6 +259,7 @@ class SoftiZPEnergy(Device):
     XTilt = attribute(
         dtype='DevDouble',
         access=AttrWriteType.READ_WRITE,
+        unit="degree",
     )
 
     XTiltCorrectSign = attribute(
@@ -288,7 +289,7 @@ class SoftiZPEnergy(Device):
         self._zp__a1 = float(props['ZP_A1']['__value'][0])
         self._zp__diam = 0.0
         self._zp_width = 0.0
-        self.__position = 0.0
+        self.__position = -1000.0
         self.__defocus = 0.0
 
         self._calc_a1 = 0.0
@@ -374,7 +375,7 @@ class SoftiZPEnergy(Device):
         """Return the Energy attribute."""
         try:
             #energy = self.calc_energy(self.__focal_dist * -1, self._zp__diam, self._zp_width)
-            self.__energy = self.__focal_dist / self._zp__a1 * -1
+            self.__energy = self.__focal_dist / self._zp__a1 
             return self.__energy
         except Exception as e:
             print('Error in read_Energy', e)
@@ -384,7 +385,7 @@ class SoftiZPEnergy(Device):
     def write_Energy(self, value):
         # PROTECTED REGION ID(SoftiZPEnergy.Energy_write) ENABLED START #
         """Set the Energy attribute."""
-        self.__focal_dist = self._zp__a1 * value * -1
+        self.__focal_dist = self._zp__a1 * value
         self.zp_dev.Position = (self.__focal_dist + self._zp__a0 + self.__defocus) / self.zp_unit_coeff + self.dial_offset
         self.__energy = value
         # PROTECTED REGION END #    //  SoftiZPEnergy.Energy_write
@@ -511,7 +512,8 @@ class SoftiZPEnergy(Device):
     )
     @DebugIt()
     def Calc_A1(self):
-        return ""
+        self._zp__a1 = -self.calc_a1(self._zp__diam, self._zp_width)
+        return str(self._zp__a1)
 
     @command(
     )
