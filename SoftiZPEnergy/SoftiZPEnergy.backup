@@ -259,7 +259,6 @@ class SoftiZPEnergy(Device):
     XTilt = attribute(
         dtype='DevDouble',
         access=AttrWriteType.READ_WRITE,
-        unit="degree",
     )
 
     XTiltCorrectSign = attribute(
@@ -289,7 +288,7 @@ class SoftiZPEnergy(Device):
         self._zp__a1 = float(props['ZP_A1']['__value'][0])
         self._zp__diam = 0.0
         self._zp_width = 0.0
-        self.__position = -1000.0
+        self.__position = 0.0
         self.__defocus = 0.0
 
         self._calc_a1 = 0.0
@@ -303,7 +302,6 @@ class SoftiZPEnergy(Device):
         self.__x_tilt_correct_on = False
         self.__sample_x_0 = 0
         self.__sample_dx = 0
-        self.__x_tilt_correct_on = False
 
         try:
             self.zp_dev = tango.DeviceProxy(self.zp_tango_motor)
@@ -330,8 +328,7 @@ class SoftiZPEnergy(Device):
         self.__sample_dx = self.__sample_x - self.__sample_x_0
         self.__x_tilt_correct_val = self.__sample_dx * math.tan(math.radians(self.__x_tilt))
         if self.__x_tilt_correct_on:
-            new_position = self.__position_0 + self.__x_tilt_correct_sign*self.__x_tilt_correct_val
-            self.zp_dev.Position = new_position / self.zp_unit_coeff + self.dial_offset
+            self.write_Position(self.__position_0 + self.__x_tilt_correct_sign*self.__x_tilt_correct_val)
         # PROTECTED REGION END #    //  SoftiZPEnergy.always_executed_hook
 
     def delete_device(self):
@@ -356,18 +353,9 @@ class SoftiZPEnergy(Device):
     def write_Position(self, value):
         # PROTECTED REGION ID(SoftiZPEnergy.Position_write) ENABLED START #
         """Set the Position attribute."""
-        if self.__x_tilt_correct_on:
-            correction_on = True
-            self.__x_tilt_correct_on = False
-        else:
-            correction_on = False
-        self.__position_0 = value
         self.zp_dev.Position = value / self.zp_unit_coeff + self.dial_offset
         self.__focal_dist = value - self._zp__a0 - self.__defocus
         self.db.put_device_attribute_property(self.get_name(), {'Position': {'Position': value}})
-        if correction_on:
-            self.__x_tilt_correct_on = True
-
         # PROTECTED REGION END #    //  SoftiZPEnergy.Position_write
 
     def read_Energy(self):
@@ -375,7 +363,7 @@ class SoftiZPEnergy(Device):
         """Return the Energy attribute."""
         try:
             #energy = self.calc_energy(self.__focal_dist * -1, self._zp__diam, self._zp_width)
-            self.__energy = self.__focal_dist / self._zp__a1 
+            self.__energy = self.__focal_dist / self._zp__a1 * -1
             return self.__energy
         except Exception as e:
             print('Error in read_Energy', e)
@@ -385,7 +373,7 @@ class SoftiZPEnergy(Device):
     def write_Energy(self, value):
         # PROTECTED REGION ID(SoftiZPEnergy.Energy_write) ENABLED START #
         """Set the Energy attribute."""
-        self.__focal_dist = self._zp__a1 * value
+        self.__focal_dist = self._zp__a1 * value * -1
         self.zp_dev.Position = (self.__focal_dist + self._zp__a0 + self.__defocus) / self.zp_unit_coeff + self.dial_offset
         self.__energy = value
         # PROTECTED REGION END #    //  SoftiZPEnergy.Energy_write
@@ -512,8 +500,7 @@ class SoftiZPEnergy(Device):
     )
     @DebugIt()
     def Calc_A1(self):
-        self._zp__a1 = -self.calc_a1(self._zp__diam, self._zp_width)
-        return str(self._zp__a1)
+        return ""
 
     @command(
     )
